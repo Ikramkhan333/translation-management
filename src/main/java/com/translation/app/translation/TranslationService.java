@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-class TranslationService {
+public class TranslationService {
     @Autowired
     private TranslationRepository translationRepo;
 

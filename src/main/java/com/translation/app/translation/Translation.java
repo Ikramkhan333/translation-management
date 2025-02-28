@@ -1,14 +1,35 @@
 package com.translation.app.translation;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Table(name = "translations")
-class Translation {
+public class Translation {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    public Translation() {
+    }
+
+    @Column(nullable = false)
+    private String language;
+
+    public Translation(Long id, String language, String text, String tag) {
+        this.id = id;
+        this.language = language;
+        this.text = text;
+        this.tag = tag;
+    }
+
+    @Column(nullable = false)
+    private String text;
+
+    @Column(nullable = false)
+    private String translatedText;
+
+    @Column(nullable = false)
+    private String tag;
     public Long getId() {
         return id;
     }
@@ -48,20 +69,4 @@ class Translation {
     public void setTag(String tag) {
         this.tag = tag;
     }
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(nullable = false)
-    private String language;
-
-    @Column(nullable = false)
-    private String text;
-
-    @Column(nullable = false)
-    private String translatedText;
-
-    @Column(nullable = false)
-    private String tag;
 }
