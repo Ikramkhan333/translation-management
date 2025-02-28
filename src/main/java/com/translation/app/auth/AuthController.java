@@ -5,14 +5,13 @@ import com.translation.app.user.User;
 import com.translation.app.user.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.SecureRandom;
-import java.util.Base64;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
@@ -28,13 +27,25 @@ public class AuthController {
         this.userService = userService;
     }
 
+    /**
+     * @author ikram
+     * @since 28-02-2025
+     * @apiNote function login and get Token
+     */
     @PostMapping("/login")
     @Operation(summary = "User login")
-    public String login(@RequestParam String username, @RequestParam String password) {
-        //authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-        return jwtTokenProvider.generateToken(username);
+    public ResponseEntity<Object> login(@RequestParam String username, @RequestParam String password) {
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+        Map<String,Object> result = new HashMap<>();
+        result.put("token",jwtTokenProvider.generateToken(username));
+        return ResponseEntity.ok().body(result);
         }
 
+    /**
+     * @author ikram
+     * @since 28-02-2025
+     * @apiNote function add user
+     */
     @PostMapping("/register")
     @Operation(summary = "User registration")
     public String register(@RequestBody User user) {

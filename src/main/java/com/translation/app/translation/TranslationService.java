@@ -2,6 +2,7 @@ package com.translation.app.translation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,15 +17,15 @@ class TranslationService {
         return translationRepo.save(translation);
     }
 
-    public List<Translation> searchTranslations(String tag, String text, String language) {
+    public List<Translation> searchTranslations(String tag, String text, String language, Pageable pageable) {
         if (tag != null) {
-            return translationRepo.findByTag(tag);
+            return translationRepo.findByTag(tag,pageable);
         } else if (text != null) {
-            return translationRepo.findByTextContaining(text);
+            return translationRepo.findByTextContaining(text,pageable);
         } else if (language != null) {
-            return translationRepo.findByLanguage(language);
+            return translationRepo.findByLanguage(language,pageable);
         }
-        return translationRepo.findAll();
+        return translationRepo.findAll(pageable).getContent().stream().toList();
     }
 
     public List<Translation> exportTranslations(int page, int size) {

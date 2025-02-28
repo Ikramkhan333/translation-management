@@ -2,6 +2,7 @@ package com.translation.app.translation;
 
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.util.stream.IntStream;
@@ -13,7 +14,7 @@ class DatabaseSeeder {
 
     @PostConstruct
     public void seedDatabase() {
-        if (translationService.searchTranslations("","","").isEmpty()) {
+        if (translationService.searchTranslations("","","", Pageable.ofSize(1)).isEmpty()) {
             IntStream.range(0, 100000).forEach(i -> {
                 Translation translation = new Translation();
                 translation.setLanguage("en");
