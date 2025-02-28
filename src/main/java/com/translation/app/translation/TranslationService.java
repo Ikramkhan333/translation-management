@@ -27,6 +27,20 @@ public class TranslationService {
         }
         return translationRepo.findAll(pageable).getContent().stream().toList();
     }
+    public Translation updateTranslation(Long id, Translation updatedTranslation) {
+        return translationRepo.findById(id).map(existingTranslation -> {
+            existingTranslation.setLanguage(updatedTranslation.getLanguage());
+            existingTranslation.setText(updatedTranslation.getText());
+            existingTranslation.setTranslatedText(updatedTranslation.getTranslatedText());
+            existingTranslation.setTag(updatedTranslation.getTag());
+            return translationRepo.save(existingTranslation);
+        }).orElseThrow(() -> new RuntimeException("Translation not found"));
+    }
+
+    public void deleteTranslation(Long id) {
+        translationRepo.deleteById(id);
+    }
+
 
     public List<Translation> exportTranslations(int page, int size) {
         return translationRepo.findAll(PageRequest.of(page, size)).getContent();

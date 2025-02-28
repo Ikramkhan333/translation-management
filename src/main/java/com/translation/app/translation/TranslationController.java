@@ -28,6 +28,17 @@ class TranslationController {
         return ResponseEntity.ok(translationService.searchTranslations(tag, text, language,pageable));
     }
 
+    @PutMapping("/translate/{id}")
+    public ResponseEntity<Translation> updateTranslation(@PathVariable Long id, @RequestBody Translation translation) {
+        return ResponseEntity.ok(translationService.updateTranslation(id, translation));
+    }
+
+    @DeleteMapping("/translate/{id}")
+    public ResponseEntity<Void> deleteTranslation(@PathVariable Long id) {
+        translationService.deleteTranslation(id);
+        return ResponseEntity.noContent().build();
+    }
+
     @GetMapping("/translations/export")
     public ResponseEntity<List<Translation>> exportTranslations(@RequestParam(defaultValue = "0") int page,
                                                                 @RequestParam(defaultValue = "1000") int size) {
