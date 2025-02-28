@@ -35,9 +35,9 @@ The Translation Management Service is a Spring Boot-based API-driven service tha
    ```
 2. Configure database in `application.properties` (for PostgreSQL):
    ```properties
-   spring.datasource.url=jdbc:postgresql://localhost:5432/translation_db
-   spring.datasource.username=your_username
-   spring.datasource.password=your_password
+   spring.datasource.url=jdbc:postgresql://localhost:5432/mydb
+   spring.datasource.username=postgres
+   spring.datasource.password=2818
    ```
 3. Build and run the application:
    ```sh
